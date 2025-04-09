@@ -15,11 +15,12 @@ mosh_command() {
 
 	args="${args#*-#}"
 	args="${args%|*}"
+	args="${args//\\}"
 
 	echo "mosh $args"
 }
 
 main() {
-	echo "$(mosh_command)"
+	mosh_command
 }
 main
