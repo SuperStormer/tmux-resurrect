@@ -130,9 +130,9 @@ _get_proc_restore_command() {
 	local match="$3"
 	local restore_element="$(_get_proc_restore_element "$proc")"
 	if [[ "$restore_element" =~ " ${inline_strategy_arguments_token}" ]]; then
-		# replaces "%" with command arguments
-		local command_arguments="$(_get_command_arguments "$pane_full_command" "$match")"
-		echo "$restore_element" | sed "s,${inline_strategy_arguments_token},${command_arguments},"
+		# replaces "*" with command arguments
+		local command_arguments="$(_get_command_arguments "$pane_full_command" "$match" | sed -e 's/[\/&]/\\&/g')"
+		echo "$restore_element" | sed "s/${inline_strategy_arguments_token}/${command_arguments}/"
 	else
 		echo "$restore_element"
 	fi
